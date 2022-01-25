@@ -1,6 +1,6 @@
 #!groovy
 
-def regitry = "registry.dev.yashkov.org/yashkov"
+def registry = "registry.dev.yashkov.org/yashkov"
 
 pipeline {
     agent {
@@ -23,10 +23,10 @@ pipeline {
             }
 
             steps {
-                sh '''VERSION=3.8.4 /kaniko/executor \
+                sh '''/kaniko/executor \
 -c $CONTEXT -f $CONTEXT/Dockerfile \
---build-arg java_version=17 --build-arg maven_version=$VERSION \
---destination=$IMAGE:$VERSION --destination=$IMAGE:latest'''
+--build-arg source=3.8.4-eclipse-temurin-17-alpine \
+--destination=$IMAGE:3.8.4-jdk17 --destination=$IMAGE:latest'''
             }
         }
     }
