@@ -10,6 +10,8 @@ RUN apk update && \
     apk del alpine-sdk python3 && \
     npm cache clean --force
 
+ENV CHROME_BIN=/usr/bin/chromium-browser
+
 USER build
 WORKDIR /home/build
 CMD [ "ng" ]
