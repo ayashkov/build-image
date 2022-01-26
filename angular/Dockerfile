@@ -9,4 +9,6 @@ RUN apk update && \
     apk del alpine-sdk python3 && \
     npm cache clean --force
 
+USER build
+WORKDIR /home/build
 CMD [ "ng" ]
