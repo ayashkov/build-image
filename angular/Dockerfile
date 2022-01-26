@@ -1,7 +1,7 @@
-ARG node
-FROM ${node}
+ARG source
+FROM ${source}
 
-ARG angular_version
+ARG angular_version=latest
 
 RUN apk update && \
     apk add --no-cache alpine-sdk python3 chromium chromium-chromedriver && \

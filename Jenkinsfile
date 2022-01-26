@@ -7,6 +7,7 @@ def angularVersion = '13.1.0'
 def registry = 'registry.dev.yashkov.org/yashkov'
 
 def nodeImage = "${registry}/node"
+def angularImage = "${registry}/angular"
 
 pipeline {
     agent {
@@ -35,6 +36,21 @@ pipeline {
 --build-arg npm_version=${npmVersion} \
 --destination=${nodeImage}:${nodeVersion} \
 --destination=${nodeImage}:latest"""
+            }
+        }
+
+        stage('angular') {
+            environment {
+                CONTEXT ="$WORKSPACE/angular"
+            }
+
+            steps {
+                sh """\
+/kaniko/executor -c $CONTEXT -f $CONTEXT/Dockerfile \
+--build-arg source=${nodeImage}:${nodeVersion} \
+--build-arg angular_version=${angularVersion} \
+--destination=${angularImage}:${angularVersion} \
+--destination=${angularImage}:latest"""
             }
         }
     }
