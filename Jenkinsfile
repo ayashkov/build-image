@@ -1,6 +1,12 @@
 #!groovy
 
-def registry = "registry.dev.yashkov.org/yashkov"
+def alpineVersion = '3.15.0'
+def nodeVersion = '16.13.2'
+def npmVersion = '8.1.3'
+def angularVersion = '13.1.0'
+def registry = 'registry.dev.yashkov.org/yashkov'
+
+def nodeImage = "${registry}/node"
 
 pipeline {
     agent {
@@ -16,17 +22,19 @@ pipeline {
     }
 
     stages {
-        stage('maven') {
+        stage('node') {
             environment {
-                CONTEXT ="$WORKSPACE/maven"
-                IMAGE = "$registry/maven"
+                CONTEXT ="$WORKSPACE/node"
             }
 
             steps {
-                sh '''/kaniko/executor \
--c $CONTEXT -f $CONTEXT/Dockerfile \
---build-arg source=3.8.4-eclipse-temurin-17-alpine \
---destination=$IMAGE:3.8.4-jdk17 --destination=$IMAGE:latest'''
+                sh """\
+/kaniko/executor -c $CONTEXT -f $CONTEXT/Dockerfile \
+--build-arg source=alpine:${alpineVersion} \
+--build-arg node_version=${nodeVersion} \
+--build-arg npm_version=${npmVersion} \
+--destination=${nodeImage}:${nodeVersion} \
+--destination=${nodeImage}:latest"""
             }
         }
     }
