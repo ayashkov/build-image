@@ -64,7 +64,7 @@ pipeline {
             steps {
                 sh """\
 /kaniko/executor -c $CONTEXT -f $CONTEXT/Dockerfile \
---build-arg source=${angularImage}:${angularImage} \
+--build-arg source=${angularImage}:${angularVersion} \
 --build-arg maven_version=${mavenVersion} \
 --destination=${mavenImage}:${mavenVersion} \
 --destination=${mavenImage}:latest"""
