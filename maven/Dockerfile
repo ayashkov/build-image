@@ -3,6 +3,7 @@ FROM ${source}
 
 ARG maven_version
 
+USER root
 RUN apk update && \
     apk add --no-cache openjdk17-jre openjdk17-jdk maven=~${maven_version}
 
