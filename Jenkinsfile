@@ -4,10 +4,12 @@ def alpineVersion = '3.15.0'
 def nodeVersion = '16.13.2'
 def npmVersion = '8.1.3'
 def angularVersion = '13.1.0'
+def mavenVersion = '3.8.3'
 def registry = 'registry.dev.yashkov.org/yashkov'
 
 def nodeImage = "${registry}/node"
 def angularImage = "${registry}/angular"
+def mavenImage = "${registry}/maven"
 
 pipeline {
     agent {
@@ -51,6 +53,21 @@ pipeline {
 --build-arg angular_version=${angularVersion} \
 --destination=${angularImage}:${angularVersion} \
 --destination=${angularImage}:latest"""
+            }
+        }
+
+        stage('maven') {
+            environment {
+                CONTEXT ="$WORKSPACE/maven"
+            }
+
+            steps {
+                sh """\
+/kaniko/executor -c $CONTEXT -f $CONTEXT/Dockerfile \
+--build-arg source=${angularImage}:${angularImage} \
+--build-arg maven_version=${mavenVersion} \
+--destination=${mavenImage}:${mavenVersion} \
+--destination=${mavenImage}:latest"""
             }
         }
     }
