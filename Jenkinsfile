@@ -41,7 +41,7 @@ pipeline {
             steps {
                 sh """\
 /kaniko/executor -c $CONTEXT -f $CONTEXT/Dockerfile \
---use-new-run \
+--single-snapshot \
 --build-arg source=alpine:${alpineVersion} \
 --build-arg jre_version=${jreVersion} \
 --destination=${jreImage}:${jreVersion}.${jreLevel} \
@@ -57,7 +57,7 @@ pipeline {
             steps {
                 sh """\
 /kaniko/executor -c $CONTEXT -f $CONTEXT/Dockerfile \
---use-new-run \
+--single-snapshot \
 --build-arg source=alpine:${alpineVersion} \
 --build-arg node_version=${nodeVersion} \
 --destination=${nodeImage}:${nodeVersion}.${nodeLevel} \
@@ -73,7 +73,7 @@ pipeline {
             steps {
                 sh """\
 /kaniko/executor -c $CONTEXT -f $CONTEXT/Dockerfile \
---use-new-run \
+--single-snapshot \
 --build-arg source=${nodeImage}:${nodeVersion}.${nodeLevel} \
 --build-arg npm_version=${npmVersion} \
 --destination=${npmImage}:${npmVersion}.${npmLevel} \
@@ -89,7 +89,7 @@ pipeline {
             steps {
                 sh """\
 /kaniko/executor -c $CONTEXT -f $CONTEXT/Dockerfile \
---use-new-run \
+--single-snapshot \
 --build-arg source=${npmImage}:${npmVersion}.${npmLevel} \
 --build-arg angular_version=${angularVersion} \
 --destination=${angularImage}:${angularVersion}.${angularLevel} \
@@ -105,7 +105,7 @@ pipeline {
             steps {
                 sh """\
 /kaniko/executor -c $CONTEXT -f $CONTEXT/Dockerfile \
---use-new-run \
+--single-snapshot \
 --build-arg source=${npmImage}:${npmVersion}.${npmLevel} \
 --build-arg maven_version=${mavenVersion} \
 --destination=${mavenImage}:${mavenVersion}.${mavenLevel} \
