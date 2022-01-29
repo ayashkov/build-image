@@ -1,7 +1,7 @@
 #!groovy
 
 def alpineVersion = '3.15.0'
-def javaVersion = '17.0.2'
+def jreVersion = '17.0.2'
 def jreLevel = '0'
 def nodeVersion = '16.13.2'
 def nodeLevel = '1'
@@ -10,7 +10,7 @@ def npmLevel = '0'
 def angularVersion = '13.1.0'
 def angularLevel = '1'
 def mavenVersion = '3.8.3'
-def mavenLevel = '1'
+def mavenLevel = '2'
 def registry = 'registry.dev.yashkov.org/yashkov'
 
 def jreImage = "${registry}/jre"
@@ -42,8 +42,8 @@ pipeline {
                 sh """\
 /kaniko/executor -c $CONTEXT -f $CONTEXT/Dockerfile \
 --build-arg source=alpine:${alpineVersion} \
---build-arg java_version=${javaVersion} \
---destination=${jreImage}:${javaVersion}.${jreLevel} \
+--build-arg jre_version=${jreVersion} \
+--destination=${jreImage}:${jreVersion}.${jreLevel} \
 --destination=${jreImage}:latest"""
             }
         }
@@ -102,7 +102,6 @@ pipeline {
                 sh """\
 /kaniko/executor -c $CONTEXT -f $CONTEXT/Dockerfile \
 --build-arg source=${npmImage}:${npmVersion}.${npmLevel} \
---build-arg java_version=${javaVersion} \
 --build-arg maven_version=${mavenVersion} \
 --destination=${mavenImage}:${mavenVersion}.${mavenLevel} \
 --destination=${mavenImage}:latest"""
