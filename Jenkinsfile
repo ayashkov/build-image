@@ -2,15 +2,15 @@
 
 def alpineVersion = '3.15.0'
 def jreVersion = '17.0.2'
-def jreLevel = '0'
+def jreLevel = '1'
 def nodeVersion = '16.13.2'
-def nodeLevel = '1'
+def nodeLevel = '2'
 def npmVersion = '8.1.3'
-def npmLevel = '0'
+def npmLevel = '1'
 def angularVersion = '13.1.0'
-def angularLevel = '1'
+def angularLevel = '2'
 def mavenVersion = '3.8.3'
-def mavenLevel = '2'
+def mavenLevel = '3'
 def registry = 'registry.dev.yashkov.org/yashkov'
 
 def jreImage = "${registry}/jre"
